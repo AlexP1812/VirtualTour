@@ -1,0 +1,68 @@
+﻿@model VirtualTour.Models.Image
+@{
+    ViewBag.Title = "Upload Image";
+}
+<html>
+<head>
+    <title>Image Gallery</title>
+    <link href="~/Content/bootstrap-theme.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-theme.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <script type="text/javascript">
+        window.onload = function ()
+        {
+            document.getElementById('imageUploadId').onsubmit = function ()
+            {
+                var formdata = new FormData();
+                var fileInput = document.getElementById('fileInputType');
+                for (i = 0; i < fileInput.files.length; i++)
+                {
+                    formdata.append(fileInput.files[i].name, fileInput.files[i]);
+                }
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '/Gallery/UploadImageMethod');
+                xhr.send(formdata);
+                xhr.onreadystatechange = function ()
+                {
+                    if (xhr.readyState == 4 && xhr.status == 200)
+                    {
+                        if (xhr.responseText == "Success")
+                        {
+                            alert("Upload image successfully.");
+                            parent.jQuery.fancybox.close();
+                         
+                        }
+                        else
+                        {
+                            alert("Error occurred.! Please try again");
+                        }
+                    }
+                }
+                return false;
+            }
+        }
+    </script>
+
+</head>
+<body style="background-color:#fff">
+    <div style="height:400px; border:1px solid;">
+        <div>
+            <div style="margin-left:80px; float:left; width:500px;
+                  height:270px; border: 0px solid black;">
+                <div>
+                    <br />
+                    <form id="imageUploadId">
+                        <h3>Upload a picture</h3>
+                        <input id="fileInputType" type="file" multiple class="fileUpload"
+                               style="width:300px;"><br />
+                        <input type="submit" class="btn btn-success" value="Image Upload" />
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</body>
+</html>
+
+

@@ -1,0 +1,7 @@
+﻿@model VirtualTour.Models.Image
+@{
+    ViewBag.Title = "Image";
+}
+@{ var img = Model.Name; }
+<h2>Image</h2>
+<img src="@Url.Content("~/Upload_Files/" +img)" class="imgBox" />
