@@ -1,0 +1,39 @@
+﻿@model IEnumerable<VirtualTour.Models.Image>
+
+<style type="text/css">
+    .imgBox {
+        width: 200px;
+        height: 200px;
+        opacity: 1.0;
+        filter: alpha(opacity=100);
+    }
+
+        .imgBox:hover {
+            -moz-box-shadow: 0 0 10px #ccc;
+            -webkit-box-shadow: 0 0 10px #ccc;
+            box-shadow: 0 0 10px #ccc;
+            opacity: 0.4;
+            filter: alpha(opacity=40);
+        }
+</style>
+
+<div style="border-bottom:1px solid Red;"></div>
+
+<div class="row-fluid">
+    <div class="span2">
+        <div class="item">
+            @foreach (var image in Model)
+            {
+                <div style=" margin:10px; float:left; height:200px; overflow:hidden; width:200px;">
+                    <a id="ShowImage" class="fancybox-button" data-rel="fancybox-button"
+                       title="Photo" href="@Url.Action("Image", "Gallery",new {id=image.ID })">
+                        <div class="zoom">
+                            <img src="@Url.Content("~/Upload_Files/" + image.Name)" class="imgBox" />
+                            <div class="zoom-icon"></div>
+                        </div>
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+</div>

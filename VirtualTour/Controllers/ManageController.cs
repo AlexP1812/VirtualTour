@@ -20,10 +20,34 @@ namespace VirtualTour.Controllers
         }
 
         private readonly ApplicationContext db = new ApplicationContext();
-        public ActionResult Index()
+
+
+        [Authorize]
+        public ActionResult Index(string id)
         {
-            return View();
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+            ApplicationUser user = db.Users.FirstOrDefault(t => t.Id == id);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+
+            user.Images = db.Images.Where(c => c.UserId == id);
+            return View(user);
         }
+
+        [Authorize]
+        public ActionResult UserGallery()
+        {
+            
+            string id = User.Identity.GetUserId();
+            var images = db.Images.Where(c => c.UserId==id );
+            return View(images.ToList());
+        }
+
 
         [Authorize(Roles ="admin")]
         public ActionResult AdminIndex()
@@ -41,7 +65,7 @@ namespace VirtualTour.Controllers
                 EditModel model = new EditModel { Name = user.Name, Email=user.Email, Id=user.Id };
                 return View(model);
             }
-            return RedirectToAction("Login", "Account");
+            return RedirectToAction("AdminIndex", "Manage");
         }
 
         [HttpPost]

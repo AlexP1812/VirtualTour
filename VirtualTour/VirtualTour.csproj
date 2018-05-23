@@ -271,6 +271,7 @@
     <Content Include="Views\Manage\Delete.cshtml" />
     <Content Include="Views\Gallery\Image.cshtml" />
     <Content Include="Views\Manage\Index.cshtml" />
+    <Content Include="Views\Partial\Gallery.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

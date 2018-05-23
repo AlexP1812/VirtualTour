@@ -15,10 +15,19 @@ namespace VirtualTour.Controllers
             var images = db.Images;
             return View(images.ToList());
         }
-        public ActionResult Image(Guid id)
+        public ActionResult Image(Guid? id)
         {
-            var img = db.Images.Find(id);
-            return View(img);
+            if (id == null)
+            {
+                return RedirectToAction("Index", "Gallery");
+
+            }
+            else
+            {
+                var img = db.Images.Find(id);
+                return View(img);
+            }
+            
         }
         [HttpGet]
         [Authorize]

@@ -9,7 +9,7 @@
             <li>
                 @if (HttpContext.Current.User.IsInRole("user"))
     {
-            @Html.ActionLink("Личный кабинет", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+            @Html.ActionLink("Личный кабинет", "Index", "Manage",routeValues: new { id = HttpContext.Current.User.Identity.GetUserId() }, htmlAttributes: new { title = "Manage" })
 }
                 @if (HttpContext.Current.User.IsInRole("admin"))
     {
