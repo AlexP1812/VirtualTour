@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using PagedList;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -22,38 +23,14 @@ namespace VirtualTour.Controllers
         private readonly ApplicationContext db = new ApplicationContext();
 
 
-        [Authorize]
-        public ActionResult Index(string id)
-        {
-            if (id == null)
-            {
-                return HttpNotFound();
-            }
-            ApplicationUser user = db.Users.FirstOrDefault(t => t.Id == id);
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
-
-            user.Images = db.Images.Where(c => c.UserId == id);
-            return View(user);
-        }
-
-        [Authorize]
-        public ActionResult UserGallery()
-        {
-            
-            string id = User.Identity.GetUserId();
-            var images = db.Images.Where(c => c.UserId==id );
-            return View(images.ToList());
-        }
-
 
         [Authorize(Roles ="admin")]
-        public ActionResult AdminIndex()
+        public ActionResult Index(int? page)
         {
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
             var users = db.Users.ToList();
-            return View(users);
+            return View(users.ToPagedList(pageNumber, pageSize));
         }
 
         [Authorize(Roles = "admin")]

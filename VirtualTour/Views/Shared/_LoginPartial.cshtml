@@ -7,15 +7,14 @@
 
         <ul class="nav navbar-nav navbar-right">
             <li>
-                @if (HttpContext.Current.User.IsInRole("user"))
-    {
-            @Html.ActionLink("Личный кабинет", "Index", "Manage",routeValues: new { id = HttpContext.Current.User.Identity.GetUserId() }, htmlAttributes: new { title = "Manage" })
-}
+                @Html.ActionLink("Личный кабинет", "Index", "Profile", routeValues: new { id = HttpContext.Current.User.Identity.GetUserId() }, htmlAttributes: new { title = "Profile" })
+                </li>
                 @if (HttpContext.Current.User.IsInRole("admin"))
-    {
-            @Html.ActionLink("Панель администратора", "AdminIndex", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
-}
-            </li>
+                {
+                    <li>
+                 @Html.ActionLink("Панель администратора", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                    </li>
+                }
             <li><a href="javascript:document.getElementById('logoutForm').submit()">Выйти</a></li>
         </ul>
     }
